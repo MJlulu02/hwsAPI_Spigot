@@ -22,6 +22,9 @@ public class DataManageur {
 	}
 
 	public PlayerAPI getPlayerData() {
+		if(!this.jedis.exists("PlayerData:" + p.getName()))
+			return null;
+			
 		this.HashData = (HashMap<String, String>) this.jedis.hgetAll("PlayerData:" + p.getName());
 
 		if (this.HashData.containsKey("hwsgrade"))
@@ -29,7 +32,7 @@ public class DataManageur {
 		if(this.HashData.containsKey("hwscoins"))
 			this.playerAPI.setCoins(Double.parseDouble(this.HashData.get("hwscoins")));
 		if(this.HashData.containsKey("hwspixels"))
-			this.playerAPI.setPixels(Integer.parseInt(this.HashData.get("hwspixels")));
+			this.playerAPI.setPixels(Double.parseDouble(this.HashData.get("hwspixels")));
 		
 		this.HashData.remove("hwsgrade");
 		this.HashData.remove("hwscoins");
@@ -43,9 +46,12 @@ public class DataManageur {
 	}
 	
 	public void setPlayerData() {
-		this.HashData.put("hwscoins", this.playerAPI.getCoins()+"");
-		this.HashData.put("hwspixels", this.playerAPI.getPixels()+"");
-		this.HashData.put("hwsgrade", this.playerAPI.getGrade().toString()+"");
+		if(this.playerAPI.getCoins() != 0)
+			this.HashData.put("hwscoins", this.playerAPI.getCoins()+"");
+		if(this.playerAPI.getPixels() != 0)
+			this.HashData.put("hwspixels", this.playerAPI.getPixels()+"");
+		if(this.playerAPI.getGrade() != HwsGradeAPI.Joueur)
+			this.HashData.put("hwsgrade", this.playerAPI.getGrade().toString()+"");
 		
 		this.HashData.putAll(this.playerAPI.getOtherData());
 		

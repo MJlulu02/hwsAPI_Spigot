@@ -2,3 +2,19 @@ name: HwsAPI_Spigot
 version: 1.0
 author: DevOnCompany
 main: Plugins.hwsAPI.PluginsManageur.Main
+commands:
+  coinsgive:
+    description:
+    permission: 
+  coinsremove:
+    description:
+    permission:
+  pixelsgive:
+    description:
+    permission: 
+  pixelsremove:
+    description:
+    permission:
+  setrank:
+    description:
+    permission:

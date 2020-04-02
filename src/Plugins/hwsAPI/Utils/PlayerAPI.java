@@ -8,8 +8,7 @@ import Plugins.hwsAPI.Enums.HwsGradeAPI;
 public class PlayerAPI {
 	private ArrayList<String> friends, partys;
 	private HwsGradeAPI hwsgradeapi = HwsGradeAPI.Joueur;
-	private double coins = 0;
-	private int pixels = 0;
+	private double coins = 0, pixels = 0;
 	private HashMap<String, String> OtherData = new HashMap<String, String>();
 
 	public HwsGradeAPI getGrade() {
@@ -24,35 +23,50 @@ public class PlayerAPI {
 		return coins;
 	}
 
-	public void setCoins(double coins) {
+	public double setCoins(double coins) {
 		this.coins = coins;
 		this.coins = new utils().roundDouble(this.coins, 2);
+		
+		return this.getCoins();
 	}
 
-	public void addCoins(double coins) {
+	public double addCoins(double coins) {
 		this.coins = this.coins + coins;
 		this.coins = new utils().roundDouble(this.coins, 2);
+		
+		return this.getCoins();
 	}
 
-	public void removeCoins(double coins) {
+	public double removeCoins(double coins) {
 		this.coins = this.coins - coins;
 		this.coins = new utils().roundDouble(this.coins, 2);
+		
+		return this.getCoins();
 	}
-	
-	public int getPixels() {
+
+	public double getPixels() {
 		return pixels;
 	}
 
-	public void setPixels(int pixels) {
+	public double setPixels(double pixels) {
 		this.pixels = pixels;
+		this.pixels = new utils().roundDouble(this.pixels, 2);
+		
+		return this.getPixels();
 	}
 
-	public void addPixels(int pixels) {
+	public double addPixels(double pixels) {
 		this.pixels = this.pixels + pixels;
+		this.pixels = new utils().roundDouble(this.pixels, 2);
+		
+		return this.getPixels();
 	}
 
-	public void removePixels(int pixels) {
+	public double removePixels(double pixels) {
 		this.pixels = this.pixels - pixels;
+		this.pixels = new utils().roundDouble(this.pixels, 2);
+		
+		return this.getPixels();
 	}
 
 	public HashMap<String, String> getOtherData() {

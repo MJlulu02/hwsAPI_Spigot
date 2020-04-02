@@ -10,10 +10,6 @@ public class HWSConfig {
 	private Jedis jedisclient = null;
 
 	public Jedis GetJedis() {
-		if (jedisclient != null && this.redis_pass != null && this.jedisclient.isConnected()) {
-			jedisclient.auth(this.redis_pass);
-		}
-
 		return jedisclient;
 	}
 
@@ -49,6 +45,8 @@ public class HWSConfig {
 		}
 		// Init Connection
 		this.jedisclient = new Jedis(this.getRedis_ip(), this.getRedis_port());
+		this.jedisclient.auth(this.redis_pass);
+		
 		if (!this.jedisclient.isConnected()) {
 			this.jedisclient = null;
 			return false;
