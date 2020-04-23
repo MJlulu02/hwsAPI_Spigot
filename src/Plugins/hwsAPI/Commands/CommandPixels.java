@@ -14,10 +14,11 @@ public class CommandPixels implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String msg, String[] args) {
 		if (sender instanceof Player) {
-			Player player = (Player) sender;
-
+			Player p = (Player) sender;
+			
+		if(new HWSAPI().getPlayerAPI(p).getGrade().getPower() < 8) {
 			if (args.length < 2) {
-				player.sendMessage("§2La Commande est §7: §c/"+cmd.getName()+" <Pseudo> <Montant> ");
+				p.sendMessage("§2La Commande est §7: §c/"+cmd.getName()+" <Pseudo> <Montant> ");
 				return true;
 			}
 
@@ -30,25 +31,29 @@ public class CommandPixels implements CommandExecutor {
 					double pixels = b ? playerAPI.addPixels(ppixels) : playerAPI.removePixels(ppixels);
 					new HWSAPI().setPlayerAPI(pget, playerAPI);
 
-					player.sendMessage("§2Le solde de §c" + args[0] + " §2est de §c" + pixels);
+					p.sendMessage("§2Le solde de §c" + args[0] + " §2est de §c" + pixels);
 					pget.sendMessage("§4Vous avez "+(b ? "reçu" : "perdu")+" §c" + args[1] + " Pixels§7, §4Votre solde est de §c" + pixels);
 				} else {
-					player.sendMessage("§c " + args[1] + " §4N'est pas Valide !");
+					p.sendMessage("§c " + args[1] + " §4N'est pas Valide !");
 				}
 			} else {
-				player.sendMessage("§c " + args[0] + " §4n'est pas connecter !");
+				p.sendMessage("§c " + args[0] + " §4n'est pas connecter !");
 			}
+		}else {
+			p.sendMessage("§4Vous n'avez pas la permission d'utilisé cette commande !");
 		}
 		return true;
 	}
-
+		return false;
+	}		
+		
 	private double StringToDouble(String s) {
 		try {
 			double d = Double.parseDouble(s);
 			return d;
 		} catch (Exception e) {
 			return -1;
-		}
+		}	
 	}
 
 }

@@ -2,6 +2,7 @@ package Plugins.hwsAPI.DataMangeur;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import Plugins.hwsAPI.Enums.HwsGradeAPI;
@@ -55,7 +56,13 @@ public class DataManageur {
 		
 		this.HashData.putAll(this.playerAPI.getOtherData());
 		
-		this.jedis.hmset("PlayerData:" + p.getName(), this.HashData);
+		if(!this.jedis.exists("PlayerData:" + p.getName())) {
+			this.jedis.hmset("PlayerData:" + p.getName(), this.HashData);
+			Bukkit.broadcastMessage("Data Update");
+		}else {
+			Bukkit.broadcastMessage("Le joueur n'est pas dans le redis !");
+			return;
+		}
 		
 		new HWSAPI().removePlayerAPI(p);
 	}

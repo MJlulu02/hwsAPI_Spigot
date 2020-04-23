@@ -15,6 +15,12 @@ public class PlayerJoin implements Listener {
 	public void onjoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 
+		if(Main.instance.config.getBoolean("Join-message") && Main.instance.config.contains("None")) {
+			e.setJoinMessage(" ");
+		}else {
+			e.setJoinMessage("");
+		}
+		
 		try {
 			Thread.sleep(650);
 		} catch (InterruptedException e1) {
@@ -22,8 +28,12 @@ public class PlayerJoin implements Listener {
 		}
 
 		PlayerAPI playerAPI = new DataManageur(p).getPlayerData();
-		if (playerAPI == null)
-			p.kickPlayer("§4Une Erreur est survenue, Merci de contacté un Administrateur !");
+		if (playerAPI == null) {
+			if(p != null && p.isOnline()) {
+				p.kickPlayer("§4Une Erreur est survenue, Merci de contacté un Administrateur !");
+			}
+		}
+			
 	}
 
 	@EventHandler
