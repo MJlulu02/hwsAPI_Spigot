@@ -1,1 +1,1 @@
-hwsAPI_Spigot
+Api Hws Spigot
